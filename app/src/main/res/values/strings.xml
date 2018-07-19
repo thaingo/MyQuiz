@@ -1,3 +1,8 @@
 <resources>
-  <string name="app_name">Quiz</string>
+    <string name="app_name">Quiz</string>
+    <string name="button_true">True</string>
+    <string name="button_false">False</string>
+    <string name="textview_question">Moscow is capital of Russia?</string>
+    <string name="toast_correct">Correct!</string>
+    <string name="toast_incorrect">Incorrect!</string>
 </resources>
