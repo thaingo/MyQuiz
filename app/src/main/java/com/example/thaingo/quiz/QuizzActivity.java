@@ -31,11 +31,9 @@ public class QuizzActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizz);
 
-        mTrueButton = (Button) findViewById(R.id.button_true);
-        mFalseButton = (Button) findViewById(R.id.button_false);
-        mNextButton = (Button) findViewById(R.id.button_next);
         mQuestionTextView = (TextView) findViewById(R.id.textview_question);
 
+        mTrueButton = (Button) findViewById(R.id.button_true);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +41,7 @@ public class QuizzActivity extends AppCompatActivity {
             }
         });
 
+        mFalseButton = (Button) findViewById(R.id.button_false);
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +49,7 @@ public class QuizzActivity extends AppCompatActivity {
             }
         });
 
+        mNextButton = (Button) findViewById(R.id.button_next);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +57,8 @@ public class QuizzActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+
+        updateQuestion();
     }
 
     private void updateQuestion() {
