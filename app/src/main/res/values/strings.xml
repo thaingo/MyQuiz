@@ -10,4 +10,7 @@
     <string name="toast_correct">Correct!</string>
     <string name="toast_incorrect">Incorrect!</string>
     <string name="button_next">Next</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="button_cheat">Show me the answer</string>
+    <string name="toast_judgement">Cheating is WRONG</string>
 </resources>
