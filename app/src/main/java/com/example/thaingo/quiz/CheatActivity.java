@@ -11,6 +11,8 @@ import android.widget.TextView;
 public class CheatActivity extends AppCompatActivity {
 
     private static final String EXTRA_ANSWER_IS_TRUE = "com.example.thaingo.quiz.answer_is_true";
+    private static final String EXTRA_SHOWN_ANSWER = "com.example.thaingo.quiz.shown_answer";
+
     private boolean mAnswerIsTrue;
     private TextView mTextView;
     private Button mShowAnswerButton;
@@ -31,13 +33,24 @@ public class CheatActivity extends AppCompatActivity {
                 } else {
                     mTextView.setText(R.string.button_false);
                 }
+                setShownAnswerResult(true);
             }
         });
+    }
+
+    private void setShownAnswerResult(boolean shown) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SHOWN_ANSWER, shown);
+        setResult(RESULT_OK, intent);
     }
 
     public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
         Intent intent = new Intent(packageContext, CheatActivity.class);
         intent.putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue);
         return intent;
+    }
+
+    public static boolean wasAnswerShown(Intent intent) {
+        return intent.getBooleanExtra(EXTRA_SHOWN_ANSWER, false);
     }
 }

@@ -17,9 +17,11 @@ public class QuizzActivity extends AppCompatActivity {
     private Button mNextButton;
     private Button mCheatButton;
     private TextView mQuestionTextView;
+    private boolean mIsCheater;
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Question[] mQuestions = new Question[]{
             new Question(R.string.question_russia, true),
@@ -65,6 +67,7 @@ public class QuizzActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestions.length;
+                mIsCheater = false;
                 updateQuestion();
             }
         });
@@ -75,7 +78,7 @@ public class QuizzActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean answerIsTrue = mQuestions[mCurrentIndex].isAnswerTrue();
                 Intent intent = CheatActivity.newIntent(QuizzActivity.this, answerIsTrue);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
 
@@ -83,10 +86,25 @@ public class QuizzActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle saveInstanceState) {
+    protected void onSaveInstanceState(Bundle saveInstanceState) {
         super.onSaveInstanceState(saveInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         saveInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (intent == null) {
+                return;
+            }
+
+            mIsCheater = CheatActivity.wasAnswerShown(intent);
+        }
     }
 
     @Override
@@ -129,7 +147,9 @@ public class QuizzActivity extends AppCompatActivity {
         boolean answerIsTrue = mQuestions[mCurrentIndex].isAnswerTrue();
 
         int toastMessageId = 0;
-        if (userPressedTrue == answerIsTrue) {
+        if (mIsCheater) {
+            toastMessageId = R.string.toast_judgement;
+        } else if (userPressedTrue == answerIsTrue) {
             toastMessageId = R.string.toast_correct;
         } else {
             toastMessageId = R.string.toast_incorrect;
